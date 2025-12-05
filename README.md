@@ -1,56 +1,47 @@
-# Career Compass – AI Job & Career Assistant
+# Smart Campus Assistant – AI Study Helper
 
-Career Compass is an AI-powered tool that helps students understand their job readiness, improve resumes, and prepare for career opportunities. It analyzes job descriptions, evaluates resumes, identifies missing skills, and gives clear guidance for stronger job applications.
-
----
-
-## 🚀 Features
-
-### ⭐ Job Description + Resume Analysis
-Paste or upload a job description and your resume.  
-The system compares both and provides a simple, easy-to-understand analysis.
+Smart Campus Assistant is an AI-powered tool designed to help college students study more efficiently. It organizes scattered lecture materials and provides quick, intelligent learning support.
 
 ---
 
-### ⭐ Match Score
-Get a clear rating such as **“Strong Match – 8/10”** showing how well you fit the job requirements.
+## 🚀 What It Does
+
+### 📂 Upload Course Materials
+Students can easily upload PDFs, documents, and PPTs through a drag-and-drop interface.  
+The assistant uses these files as the main source for all answers.
 
 ---
 
-### ⭐ Skill Gap Detection
-The assistant highlights skills or tools missing from your resume, for example:
-
-> “This role requires **Docker** and **AWS**, but your resume doesn’t mention them.”
-
----
-
-### ⭐ Actionable Improvement Tips
-You receive at least one specific suggestion to strengthen your application:
-
-> “Add your Python project to your resume — it aligns with their backend needs.”
+### 💬 Natural Language Q&A
+Students can ask questions in plain language.  
+The assistant gives accurate, context-based answers directly from the uploaded materials.
 
 ---
 
-### ⭐ Natural Language Career Q&A
-Ask any career-related question, such as:
-- “What skills should I learn for data science?”
-- “Am I ready for a frontend developer role?”
-- “Which certifications help in cloud engineering?”
+### ✍️ Automatic Summaries
+Long lectures or bulky PDFs are condensed into short, clear summaries to help students learn faster.
 
-The assistant gives helpful, personalized answers.
+---
+
+### 📝 Practice Quiz Generation
+The assistant can automatically create quizzes based on the course materials to help boost retention and exam preparation.
+
+---
+
+## 📘 Suggested Data Sources
+- Student’s own notes and uploaded materials  
+- Wikipedia (for general knowledge)  
+- NCERT textbooks and other public educational sources  
 
 ---
 
 ## 🎯 Purpose
-Career Compass helps students:
-- Understand their readiness for job roles  
-- Improve resumes and applications  
-- Discover missing skills  
-- Learn what to work on next  
-- Get guidance on career paths  
+The Smart Campus Assistant helps students:
+- Understand their study materials quickly  
+- Prepare for exams efficiently  
+- Reduce time spent searching through PDFs  
+- Improve learning with quizzes and summaries  
 
 ---
 
-## 📌 Summary
-Career Compass acts as a smart mentor, making job preparation easier, clearer, and more effective for students.
-
+Smart Campus Assistant makes studying simpler, faster, and smarter.
