@@ -1,4 +1,4 @@
-# Smart Campus Assistant – AI Study Helper
+# Smart Campus Assistant – AI Study Helper for Students
 
 Smart Campus Assistant is an AI-powered tool designed to help college students study more efficiently. It organizes scattered lecture materials and provides quick, intelligent learning support.
 
