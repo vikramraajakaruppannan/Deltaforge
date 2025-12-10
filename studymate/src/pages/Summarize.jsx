@@ -5,8 +5,7 @@ import { SummarizePanel } from "@/components/summarize/SummarizePanel";
 export default function Summarize() {
   return (
     <MainLayout>
-      <h1 className="text-xl font-semibold mb-6">Summarize Notes</h1>
-
+      <h1 className="text-xl font-semibold mb-6">Document Summarizer</h1>
       <SummarizePanel />
     </MainLayout>
   );

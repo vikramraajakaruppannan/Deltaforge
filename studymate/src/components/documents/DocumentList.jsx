@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
-import { FileText, ArrowUpRight, UploadCloud, Sparkles } from "lucide-react";
-import { getDocuments } from "@/lib/api";
+import { FileText, ArrowUpRight, UploadCloud, Sparkles, Trash2, Eye } from "lucide-react";
+import { getDocuments, deleteDocument, getDocumentStreamUrl } from "@/lib/api";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
 
 export function DocumentList() {
   const [docs, setDocs] = useState([]);
@@ -18,10 +19,25 @@ export function DocumentList() {
       .finally(() => setLoading(false));
   }, []);
 
+  const handleLocalDelete = async (doc) => {
+    if (!confirm(`Delete "${doc.title}"?`)) return;
+
+    try {
+      await deleteDocument(doc.id);
+      toast.success("Document deleted");
+
+      // Remove document visually
+      setDocs((prev) => prev.filter((d) => d.id !== doc.id));
+    } catch (err) {
+      toast.error("Delete failed");
+      console.error(err);
+    }
+  };
+
   if (loading) return <LoadingGrid />;
   if (docs.length === 0) return <EmptyState />;
 
-  return <DocumentsGrid docs={docs} />;
+  return <DocumentsGrid docs={docs} onDelete={handleLocalDelete} />;
 }
 
 // ——— Loading State ———
@@ -71,9 +87,9 @@ function EmptyState() {
 }
 
 // ——— Main Documents Grid ———
-function DocumentsGrid({ docs }) {
+function DocumentsGrid({ docs, onDelete }) {
   return (
-    <div className="grid gap-6 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid gap-6 mt-8 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
       <AnimatePresence mode="popLayout">
         {docs.map((doc, index) => (
           <motion.div
@@ -87,15 +103,16 @@ function DocumentsGrid({ docs }) {
             className="group"
           >
             <Card className="relative overflow-hidden rounded-2xl border border-border/50 bg-card/80 backdrop-blur-xl p-6 shadow-sm transition-all hover:border-primary/40 hover:shadow-2xl">
+
+              {/* Top Section — unchanged */}
               <div className="flex items-start justify-between gap-4">
-                {/* Left: Icon + Info */}
                 <div className="flex flex-1 items-start gap-4 min-w-0">
                   <div className="flex-shrink-0 rounded-xl bg-gradient-to-br from-primary/20 to-purple-600/20 p-3 transition-transform group-hover:scale-110">
                     <FileText className="h-7 w-7 text-primary" />
                   </div>
 
                   <div className="space-y-1.5 min-w-0">
-                    <h4 className="truncate font-semibold text-foreground">
+                    <h4 className="font-semibold text-foreground leading-snug break-words">
                       {doc.title || "Untitled Document"}
                     </h4>
                     <p className="truncate text-xs text-muted-foreground">
@@ -107,7 +124,7 @@ function DocumentsGrid({ docs }) {
                   </div>
                 </div>
 
-                {/* Right: Open Link */}
+                {/* External Link */}
                 {doc.public_url && (
                   <a
                     href={doc.public_url}
@@ -121,7 +138,22 @@ function DocumentsGrid({ docs }) {
                 )}
               </div>
 
-              {/* Upload Date */}
+              {/* NEW SECTION: Actions */}
+              <div className="mt-4 flex items-center justify-between">
+
+                {/* Delete Document */}
+                <button
+                  className="text-red-500 hover:bg-red-100 p-2 rounded-full transition"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDelete(doc);
+                  }}
+                >
+                  <Trash2 size={18} />
+                </button>
+              </div>
+
+              {/* Upload Date (unchanged) */}
               {doc.created_at && (
                 <p className="mt-5 text-xs text-muted-foreground/70">
                   {new Date(doc.created_at).toLocaleDateString("en-US", {

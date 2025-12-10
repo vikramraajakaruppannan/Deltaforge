@@ -45,3 +45,45 @@ export async function getDocuments() {
     throw err;
   }
 }
+
+export async function deleteDocument(id) {
+  const res = await fetch(`${API_BASE_URL}/api/documents/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) throw new Error("Delete failed");
+  return res.json();
+}
+
+export async function getDocument(id) {
+  const res = await fetch(`${API_BASE_URL}/api/documents/${id}`);
+  if (!res.ok) throw new Error("Failed to fetch single document");
+  return res.json();
+}
+
+export function getDocumentStreamUrl(id) {
+  return `${API_BASE_URL}/api/documents/stream/${id}`;
+}
+
+
+export async function summarizeDocument(docId) {
+  const res = await fetch(`${API_BASE_URL}/api/summarize/${docId}`, {
+    method: "POST",
+  });
+
+  if (!res.ok) throw new Error("Failed to summarize");
+
+  return res.json();
+}
+
+export async function chatWithDocument(docId, question) {
+  const res = await fetch(`${API_BASE_URL}/api/chat/${docId}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ question }),
+  });
+
+  if (!res.ok) throw new Error("Chat failed");
+  return res.json();
+}
+
