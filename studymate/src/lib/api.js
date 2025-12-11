@@ -87,3 +87,11 @@ export async function chatWithDocument(docId, question) {
   return res.json();
 }
 
+export async function generateQuiz(docId) {
+  const res = await fetch(`http://127.0.0.1:8000/api/quiz/${docId}`, {
+    method: "POST",
+  });
+
+  if (!res.ok) throw new Error("Quiz generation failed");
+  return res.json();
+}

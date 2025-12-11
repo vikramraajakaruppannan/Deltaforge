@@ -1,57 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MainLayout } from "@/components/layout/MainLayout";
 import { StatsCard } from "@/components/dashboard/StatsCard";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 import { RecentActivity } from "@/components/dashboard/RecentActivity";
-import {
-  MessageSquare,
-  FileText,
-  Brain,
-  HelpCircle
-} from "lucide-react";
+import { getStats, getActivity } from "@/lib/dashboard";
 
-export default function Index() {
+import { MessageSquare, FileText, Brain, HelpCircle } from "lucide-react";
+
+export default function Dashboard() {
+  const [stats, setStats] = useState(null);
+  const [activity, setActivity] = useState([]);
+
+  useEffect(() => {
+    getStats().then(setStats);
+    getActivity().then(setActivity);
+  }, []);
+
+  if (!stats)
+    return <p className="text-center mt-10 text-muted-foreground">Loading dashboard…</p>;
+
   return (
     <MainLayout>
-      <h1 className="text-xl font-semibold mb-6">Dashboard</h1>
+      <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
 
-      {/* Stats Section */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6">
         <StatsCard
           title="Questions Answered"
-          value={128}
-          subtitle="Last 7 days"
+          value={stats.questions_answered}
+          subtitle="Through Ask AI"
           icon={MessageSquare}
-          trend={{ value: 12, isPositive: true }}
         />
         <StatsCard
           title="Documents Uploaded"
-          value={34}
-          subtitle="Study materials"
+          value={stats.documents}
+          subtitle="Your study materials"
           icon={FileText}
-          trend={{ value: 8, isPositive: true }}
         />
         <StatsCard
           title="Summaries Generated"
-          value={18}
+          value={stats.summaries}
+          subtitle="From your notes"
           icon={Brain}
-          subtitle="Based on documents"
         />
         <StatsCard
           title="Quizzes Completed"
-          value={10}
+          value={stats.quizzes}
+          subtitle="Good progress!"
           icon={HelpCircle}
-          subtitle="Average score: 82%"
         />
       </div>
 
-      {/* Quick Actions */}
       <h2 className="text-lg font-semibold mb-3">Quick Actions</h2>
       <QuickActions />
 
-      {/* Recent Activity */}
       <h2 className="text-lg font-semibold mt-8 mb-3">Recent Activity</h2>
-      <RecentActivity />
+      <RecentActivity items={activity} />
     </MainLayout>
   );
 }
