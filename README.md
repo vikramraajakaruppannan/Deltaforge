@@ -1,247 +1,72 @@
-📘 Smart Campus Assistant – AI-Powered Learning & Document Intelligence Platform
+# 📘 Smart Campus Assistant
 
-Smart Campus Assistant is an AI-driven academic assistant platform that enables students to upload study materials (PDFs) and interact with them through document-based chat, structured summaries, auto-generated quizzes, and an activity-driven dashboard.
+The **Smart Campus Assistant** is an AI-powered learning platform designed to revolutionize how students interact with their PDF study materials. It leverages state-of-the-art Generative AI and Retrieval-Augmented Generation (RAG) to provide chat, structured summaries, and auto-generated quizzes directly from uploaded documents.
 
-The system is built using FastAPI, local embeddings, Retrieval-Augmented Generation (RAG), Groq LLMs, Supabase, and a modern React UI, making it robust, explainable, and production-ready.
+---
 
-🚀 Key Features
+## 🚀 Features
 
-📄 Upload and manage academic documents (PDFs)
+* ✅ **Upload PDF Study Materials:** Easily upload and process any educational PDF.
+* 💬 **Document Chat:** Ask specific questions and get answers *only* from the uploaded document content, preventing AI hallucinations.
+* 📝 **Structured Summaries:** Generate high-quality, organized summaries of complex documents.
+* 🧠 **Auto-Generated Quizzes:** Instantly create 15-question Multiple Choice Quizzes (MCQs) for self-assessment.
+* 📊 **Activity Dashboard:** Track your learning progress with key usage metrics and recent activity feeds.
+* 🔒 **Hallucination Prevention:** The system is strictly grounded in the document content via RAG.
 
-🧠 AI-powered structured summarization
+---
 
-💬 Ask questions strictly from uploaded documents (RAG)
+## 🛠️ Tech Stack
 
-🔍 Semantic search using local embeddings
+This project is built using a modern, efficient, and scalable technology stack.
 
-📝 Auto-generated MCQ quizzes (15 questions)
+| Category | Technology | Description |
+| :--- | :--- | :--- |
+| **Backend** | **FastAPI (Python)** | High-performance, asynchronous web framework for the API. |
+| **AI Model** | **Groq LLaMA 3** | Utilized for low-latency, high-throughput text generation (Chat, Summary, Quiz). |
+| **Embeddings** | **Sentence Transformers** | Local model for converting text chunks into dense vectors. |
+| **Database** | **Supabase (PostgreSQL)** | Used for robust data persistence and as the Vector Store for embeddings. |
+| **Frontend** | **React + Tailwind CSS** | Modern component-based UI with utility-first styling for a responsive design. |
 
-📊 Dynamic dashboard with stats and recent activity
+---
 
-🧩 Graceful fallback when answers are not found
+## 🧠 How It Works: The RAG Pipeline
 
-🔐 Secure, scalable backend architecture
+The core intelligence of the assistant is powered by a Retrieval-Augmented Generation (RAG) workflow, ensuring outputs are accurate and contextually relevant to the uploaded documents.
 
-🧠 System Architecture
-User (Web UI)
-   ↓
-FastAPI Backend
-   ↓
-PDF Upload & Parsing
-   ↓
-Text Chunking
-   ↓
-Local Embeddings (Sentence Transformers)
-   ↓
-Vector Similarity Search (RAG)
-   ↓
-Groq LLM (LLaMA 3)
-   ↓
-Chat / Summary / Quiz
-   ↓
-Dashboard Analytics
+1.  **PDF Upload & Extraction:** The PDF is uploaded and its text content is extracted.
+2.  **Chunking:** The text is divided into manageable, overlapping chunks.
+3.  **Local Embedding:** Each chunk is converted into a vector representation using Sentence Transformers.
+4.  **Vector Storage:** These vectors are stored in the Supabase Vector Store.
+5.  **RAG Search:** When a user asks a question, the query is embedded and used to retrieve the most relevant source document chunks.
+6.  **LLM Generation:** The retrieved chunks are passed as **context** to the Groq LLaMA 3 model, which then generates the final, grounded **Answer / Summary / Quiz**.
 
-🧠 AI Pipeline Design
-1️⃣ Document Upload & Embedding
+---
 
-Endpoint
+## 🔗 API Overview
 
-POST /api/documents/upload
+The backend exposes a clean and logical set of REST endpoints managed by FastAPI.
 
+| Feature | HTTP Method | Endpoint | Details |
+| :--- | :--- | :--- | :--- |
+| **Upload Document** | `POST` | `/api/documents/upload` | Uploads and processes a new PDF. |
+| **Document Chat** | `POST` | `/api/chat/{doc_id}` | Asks a question about a specific document. |
+| **Summarize** | `POST` | `/api/summarize/{doc_id}` | Generates a structured summary. |
+| **Generate Quiz** | `POST` | `/api/quiz/{doc_id}` | Creates the 15-question MCQ. |
+| **Dashboard Stats** | `GET` | `/api/dashboard/stats` | Retrieves key usage statistics. |
+| **Recent Activity** | `GET` | `/api/dashboard/activity` | Fetches the feed of recent user interactions. |
 
-Process
 
-Upload PDF file
+## 📈 Dashboard Metrics
 
-Extract text using PyMuPDF
+The dashboard provides users with transparent insight into their learning activity:
 
-Split content into chunks
+* **Documents Uploaded**
+* **Questions Asked**
+* **Summaries Generated**
+* **Quizzes Completed**
+* **Recent Activity Feed**
 
-Generate local embeddings
 
-Store vectors in Supabase
+---
 
-2️⃣ AI Summarization Layer
-
-Endpoint
-
-POST /api/summarize/{doc_id}
-
-
-Capabilities
-
-Produces structured, topic-wise summaries
-
-Ensures clean JSON output
-
-Handles malformed LLM responses safely
-
-3️⃣ Chat With Document (RAG)
-
-Endpoint
-
-POST /api/chat/{doc_id}
-
-
-Features
-
-Uses document-only context
-
-Prevents hallucination
-
-Returns accurate, explainable answers
-
-Gracefully responds when content is unavailable
-
-4️⃣ Quiz Generator (Hybrid AI)
-
-Endpoint
-
-POST /api/quiz/{doc_id}
-
-
-Highlights
-
-Generates exactly 15 MCQs
-
-Difficulty levels: Easy / Medium / Hard
-
-Includes explanations and sources
-
-Works even with partial document context
-
-5️⃣ Dashboard & Activity Tracking
-
-Endpoints
-
-GET /api/dashboard/stats
-GET /api/dashboard/activity
-
-
-Tracked Actions
-
-Document uploads
-
-Chat interactions
-
-Summaries generated
-
-Quizzes completed
-
-🗂️ Project Structure
-🔹 Backend (FastAPI)
-backend/
-├── main.py
-├── helpers/
-│   ├── pdf_utils.py
-│   ├── embedding_utils.py
-│   ├── llm_utils.py
-│
-├── routes/
-│   ├── documents.py
-│   ├── chat.py
-│   ├── summarize.py
-│   ├── quiz.py
-│   ├── dashboard.py
-│
-├── requirements.txt
-└── README.md
-
-🔹 Frontend (React)
-frontend/
-├── components/
-│   ├── ChatInterface.jsx
-│   ├── SummarizePanel.jsx
-│   ├── QuizPanel.jsx
-│   ├── Dashboard/
-│   │   ├── StatsCard.jsx
-│   │   ├── RecentActivity.jsx
-│
-├── pages/
-│   ├── Dashboard.jsx
-│   ├── Chat.jsx
-│   ├── Upload.jsx
-│
-├── lib/
-│   └── api.js
-└── main.jsx
-
-🛠️ Tech Stack
-Layer	Technology
-Backend	FastAPI, Python
-AI / LLM	Groq (LLaMA 3.3)
-Embeddings	Sentence Transformers (Local)
-Vector Search	Supabase RPC
-Database	Supabase (PostgreSQL)
-Frontend	React, Tailwind CSS
-UI	Shadcn UI, Lucide Icons
-📦 Database Schema
-documents
-id UUID PRIMARY KEY
-title TEXT
-file_name TEXT
-storage_path TEXT
-public_url TEXT
-size_bytes INT
-created_at TIMESTAMP
-
-document_chunks
-id UUID PRIMARY KEY
-doc_id UUID
-chunk_index INT
-text TEXT
-embedding VECTOR
-
-activity_logs
-id UUID PRIMARY KEY
-action TEXT
-details TEXT
-created_at TIMESTAMP
-
-🔍 Example User Queries
-
-“Summarize this document”
-
-“Explain human values from this PDF”
-
-“Generate a quiz from this document”
-
-“Ask questions only from the uploaded file”
-
-🧪 Error Handling & Reliability
-
-Prevents hallucinations using strict document context
-
-Handles malformed AI responses gracefully
-
-Embedding dimension mismatch protection
-
-Non-blocking activity logging
-
-🌱 Future Enhancements
-
-User authentication & personalization
-
-Voice-based document interaction
-
-Multi-document chat support
-
-Cloud deployment using Docker
-
-Mobile-responsive UI
-
-👨‍💻 Author
-
-Vikram Karuppannan
-B.Tech – Artificial Intelligence & Data Science
-FastAPI | AI Systems | RAG | Backend Engineering
-
-⭐ Support
-
-If you found this project useful:
-
-⭐ Star the repository
-
-🍴 Fork and contribute
-
-💬 Share feedback
+## 📂 Project Structure
