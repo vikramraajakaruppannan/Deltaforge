@@ -65,8 +65,3 @@ The dashboard provides users with transparent insight into their learning activi
 * **Summaries Generated**
 * **Quizzes Completed**
 * **Recent Activity Feed**
-
-
----
-
-## 📂 Project Structure
