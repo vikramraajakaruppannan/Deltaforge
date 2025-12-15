@@ -1,47 +1,41 @@
-# Smart Campus Assistant – AI Study Helper for Students
+# 📘 Smart Campus Assistant – AI-Powered Learning & Document Intelligence Platform
 
-Smart Campus Assistant is an AI-powered tool designed to help college students study more efficiently. It organizes scattered lecture materials and provides quick, intelligent learning support.
+Smart Campus Assistant is an **AI-driven academic assistant platform** that enables students to **upload study materials (PDFs)** and interact with them through **document-based chat, structured summaries, auto-generated quizzes, and an activity-driven dashboard**.
 
----
-
-## 🚀 What It Does
-
-### 📂 Upload Course Materials
-Students can easily upload PDFs, documents, and PPTs through a drag-and-drop interface.  
-The assistant uses these files as the main source for all answers.
+The system is built using **FastAPI, local embeddings, Retrieval-Augmented Generation (RAG), Groq LLMs, Supabase, and a modern React UI**, making it **robust, explainable, and production-ready**.
 
 ---
 
-### 💬 Natural Language Q&A
-Students can ask questions in plain language.  
-The assistant gives accurate, context-based answers directly from the uploaded materials.
+## 🚀 Key Features
+
+- 📄 Upload and manage academic documents (PDFs)
+- 🧠 AI-powered structured summarization
+- 💬 Ask questions strictly from uploaded documents (RAG)
+- 🔍 Semantic search using local embeddings
+- 📝 Auto-generated MCQ quizzes (15 questions)
+- 📊 Dynamic dashboard with stats and recent activity
+- 🧩 Graceful fallback when answers are not found
+- 🔐 Secure, scalable backend architecture
 
 ---
 
-### ✍️ Automatic Summaries
-Long lectures or bulky PDFs are condensed into short, clear summaries to help students learn faster.
+## 🧠 System Architecture
 
----
-
-### 📝 Practice Quiz Generation
-The assistant can automatically create quizzes based on the course materials to help boost retention and exam preparation.
-
----
-
-## 📘 Suggested Data Sources
-- Student’s own notes and uploaded materials  
-- Wikipedia (for general knowledge)  
-- NCERT textbooks and other public educational sources  
-
----
-
-## 🎯 Purpose
-The Smart Campus Assistant helps students:
-- Understand their study materials quickly  
-- Prepare for exams efficiently  
-- Reduce time spent searching through PDFs  
-- Improve learning with quizzes and summaries  
-
----
-
-Smart Campus Assistant makes studying simpler, faster, and smarter.
+```text
+User (Web UI)
+   ↓
+FastAPI Backend
+   ↓
+PDF Upload & Parsing
+   ↓
+Text Chunking
+   ↓
+Local Embeddings (Sentence Transformers)
+   ↓
+Vector Similarity Search (RAG)
+   ↓
+Groq LLM (LLaMA 3)
+   ↓
+Chat / Summary / Quiz
+   ↓
+Dashboard Analytics
